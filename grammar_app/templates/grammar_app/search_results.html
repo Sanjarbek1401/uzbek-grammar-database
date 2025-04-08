@@ -1,0 +1,65 @@
+{% extends 'grammar_app/base.html' %}
+
+{% block title %}Qidiruv: {{ query }} - O'zbek Grammatikasi{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item active">Qidiruv</li>
+    </ol>
+</nav>
+
+<div class="mb-4">
+    <h1>Qidiruv natijalari: "{{ query }}"</h1>
+    <p class="lead">{{ forms.count }} ta natija topildi</p>
+    
+    <form action="{% url 'search' %}" method="get" class="mt-3">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" value="{{ query }}" placeholder="Boshqa so'z kiriting...">
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search me-1"></i> Qidirish
+            </button>
+        </div>
+    </form>
+</div>
+
+{% if forms %}
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Grammatik shakl</th>
+                        <th>Kategoriya</th>
+                        <th>Grammatik ma'nosi</th>
+                        <th>Tarjimasi</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in forms %}
+                    <tr>
+                        <td><strong>{{ form.term }}</strong></td>
+                        <td>{{ form.category.name }}</td>
+                        <td>{{ form.grammatical_meaning|truncatechars:100 }}</td>
+                        <td>{{ form.translation }}</td>
+                        <td>
+                            <a href="{% url 'form_detail' form.pk %}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i> Batafsil
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info" role="alert">
+    <i class="fas fa-info-circle me-2"></i> Afsuski, "{{ query }}" so'rovi bo'yicha hech narsa topilmadi. Boshqa kalit so'z bilan urinib ko'ring.
+</div>
+{% endif %}
+{% endblock %}

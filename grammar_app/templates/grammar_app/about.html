@@ -1,0 +1,67 @@
+{% extends 'grammar_app/base.html' %}
+
+{% block title %}Loyiha haqida - O'zbek Grammatikasi{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h1 class="h2 mb-0">Loyiha haqida</h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="h4">O'zbek tilidagi grammatik shakllar bazasi</h2>
+                <p>
+                    Ushbu loyiha o'zbek tilidagi leksik ma'no ifodalamaydigan grammatik shakllarning lingvistik bazasini o'z ichiga oladi. 
+                    Bazada qo'shimchalar, yordamchi so'zlar, modallar, undov so'zlar, ko'makchi va yordamchi fe'llar yig'ilgan.
+                </p>
+                
+                <h3 class="h5 mt-4">Bazadagi ma'lumotlar:</h3>
+                <ul>
+                    <li>Ko'makchi fe'llar</li>
+                    <li>Modal so'zlar</li>
+                    <li>Bog'lama va to'liqsiz fe'llar</li>
+                    <li>Affikslar (qo'shimchalar)</li>
+                </ul>
+                
+                <p>
+                    Har bir grammatik shakl uchun uning grammatik ma'nosi, ingliz tiliga tarjimasi, va misollar berilgan.
+                    Ma'lumotlar uslub va davr bo'yicha ham saralangan.
+                </p>
+                
+                <h3 class="h5 mt-4">Loyihaning maqsadi:</h3>
+                <p>
+                    Loyihaning asosiy maqsadi o'zbek tilini o'rganuvchilar, tilshunoslar va tarjimonlar uchun qo'llanma bo'lib xizmat qilish.
+                    Bu ma'lumotlar bazasi o'zbek tilini grammatik jihatdan chuqurroq o'rganishni istagan har qanday kishiga foydali bo'lishi mumkin.
+                </p>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h4 class="h5">Kategoriyalar</h4>
+                        <ul class="list-group list-group-flush">
+                            {% for category in categories %}
+                            <li class="list-group-item bg-light">
+                                <a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a>
+                                <span class="badge bg-primary float-end">{{ category.forms.count }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h4 class="h5">Aloqa</h4>
+                        <p>Loyiha haqida savol yoki takliflaringiz bo'lsa, biz bilan bog'laning:</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-envelope me-2"></i> info@uzbekgrammar.uz</li>
+                            <li><i class="fas fa-phone me-2"></i> +998 90 123 45 67</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

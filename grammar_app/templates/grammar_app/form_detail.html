@@ -1,0 +1,87 @@
+{% extends 'grammar_app/base.html' %}
+
+{% block title %}{{ form.term }} - O'zbek Grammatikasi{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'category_detail' form.category.pk %}">{{ form.category.name }}</a></li>
+        <li class="breadcrumb-item active">{{ form.term }}</li>
+    </ol>
+</nav>
+
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h1 class="h2 mb-0">{{ form.term }}</h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="h5">Grammatik ma'nosi</h2>
+                <p>{{ form.grammatical_meaning|linebreaks }}</p>
+            </div>
+            <div class="col-md-6">
+                <h2 class="h5">Tarjimasi</h2>
+                <p>{{ form.translation|linebreaks }}</p>
+            </div>
+        </div>
+        
+        {% if form.usage %}
+        <hr>
+        <h2 class="h5">Ishlatilishi</h2>
+        <p>{{ form.usage|linebreaks }}</p>
+        {% endif %}
+        
+        {% if form.period or form.style %}
+        <hr>
+        <div class="row">
+            {% if form.period %}
+            <div class="col-md-6">
+                <h2 class="h5">Davr</h2>
+                <p>{{ form.period }}</p>
+            </div>
+            {% endif %}
+            
+            {% if form.style %}
+            <div class="col-md-6">
+                <h2 class="h5">Uslub</h2>
+                <p>{{ form.style }}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <h2 class="h5 mb-0">Misollar</h2>
+        <span class="badge bg-primary">{{ examples.count }} ta</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>O'zbek tilida</th>
+                        <th>Ingliz tilida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for example in examples %}
+                    <tr>
+                        <td>{{ example.uzbek_text }}</td>
+                        <td>{{ example.english_translation }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2" class="text-center">Bu shakl uchun hozircha misollar mavjud emas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'grammar_app/base.html' %}
+
+{% block title %}Sinonimlari - Yordamchi so'zlar{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'yordamchi_soz' %}">Yordamchi so'z</a></li>
+            <li class="breadcrumb-item active">Sinonimlari</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
+            <h2 class="h5 mb-0">Yordamchi so'zlar uslubiy ma'lumotlari</h2>
+            <div class="btn-group">
+                <a href="{% url 'export_category' category.id 'excel' %}" class="btn btn-sm btn-outline-success">
+                    <i class="fas fa-file-excel me-1"></i> Excel
+                </a>
+                <a href="{% url 'export_category' category.id 'json' %}" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-file-code me-1"></i> JSON
+                </a>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Yordamchi so'z</th>
+                            <th>Maxsus kodi</th>
+                            <th>Grammatik ma'nosi</th>
+                            <th>Badiiy</th>
+                            <th>Ilmiy</th>
+                            <th>Publitsistik</th>
+                            <th>Rasmiy</th>
+                            <th>So'zlashuv</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for form in forms %}
+                        <tr>
+                            <td><strong>{{ form.term }}</strong></td>
+                            <td>{{ form.special_code }}</td>
+                            <td>{{ form.grammatical_meaning }}</td>
+                            <td>{{ form.style_literary|default:"-" }}</td>
+                            <td>{{ form.style_scientific|default:"-" }}</td>
+                            <td>{{ form.style_journalistic|default:"-" }}</td>
+                            <td>{{ form.style_official|default:"-" }}</td>
+                            <td>{{ form.style_colloquial|default:"-" }}</td>
+                            <td>
+                                <a href="{% url 'form_detail' form.pk %}" class="btn btn-sm btn-outline-primary rounded-pill">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="text-center">Ma'lumotlar mavjud emas</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

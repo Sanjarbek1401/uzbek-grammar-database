@@ -1,0 +1,67 @@
+{% extends 'grammar_app/base.html' %}
+{% load static %}
+
+{% block title %}Uslub bo'yicha saralangan - Yordamchi so'zlar{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'yordamchi_soz' %}">Yordamchi so'z</a></li>
+            <li class="breadcrumb-item active">Uslub bo'yicha saralangan</li>
+        </ol>
+    </nav>
+
+    <h2 class="mb-4">Yordamchi so'zlar uslubiy ma'lumotlari</h2>
+
+    <!-- Export buttons -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="?format=excel" class="btn btn-success me-2">
+            <i class="fas fa-file-excel"></i> Excel
+        </a>
+        <a href="?format=json" class="btn btn-primary">
+            <i class="fas fa-file-code"></i> JSON
+        </a>
+    </div>
+
+    <!-- Data table -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Yordamchi so'z</th>
+                    <th>Maxsus kodi</th>
+                    <th>Grammatik ma'nosi</th>
+                    <th>Badiiy</th>
+                    <th>Ilmiy</th>
+                    <th>Publitsistik</th>
+                    <th>Rasmiy</th>
+                    <th>So'zlashuv</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if items %}
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.yordamchi_soz }}</td>
+                            <td>{{ item.maxsus_kodi }}</td>
+                            <td>{{ item.grammatik_manosi }}</td>
+                            <td>{% if item.badiiy %}✓{% else %}✗{% endif %}</td>
+                            <td>{% if item.ilmiy %}✓{% else %}✗{% endif %}</td>
+                            <td>{% if item.publitsistik %}✓{% else %}✗{% endif %}</td>
+                            <td>{% if item.rasmiy %}✓{% else %}✗{% endif %}</td>
+                            <td>{% if item.sozlashuv %}✓{% else %}✗{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="8" class="text-center">Ma'lumotlar mavjud emas</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

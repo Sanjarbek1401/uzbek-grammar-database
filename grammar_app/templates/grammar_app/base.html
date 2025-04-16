@@ -9,16 +9,248 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --primary-hover: #4338CA;
+            --secondary-color: #6B7280;
+            --light-bg: #F3F4F6;
+            --dark-bg: #111827;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB;
+        }
+
+        /* Modern Navbar Styles */
+        .navbar {
+            padding: 0.5rem 0;
+            background: linear-gradient(to right, var(--primary-color), var(--primary-hover)) !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.25rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            color: white !important;
+        }
+
+        .navbar-brand:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            margin: 0 0.25rem;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white !important;
+        }
+
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
+
+        /* Search Form Styles */
+        .search-form {
+            position: relative;
+            margin-left: auto;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .search-input {
+            padding-right: 40px;
+            border-radius: 20px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-input:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: none;
+            color: white;
+        }
+
+        .search-button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border: none;
+            background: none;
+            padding: 0 15px;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .search-button:hover {
+            color: white;
+        }
+
+        /* Responsive navbar */
+        @media (max-width: 991.98px) {
+            .search-form {
+                margin: 0.5rem 0;
+                max-width: 100%;
+            }
+            
+            .navbar-collapse {
+                padding: 1rem 0;
+            }
+        }
+
+        /* Main Content */
+        .main-container {
+            min-height: calc(100vh - 350px);
+            padding: 2rem 0;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-bg);
+            color: #F3F4F6;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer h5 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: #D1D5DB !important;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-link:hover {
+            color: white !important;
+            transform: translateX(5px);
+        }
+
+        .footer-contact {
+            color: #D1D5DB;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-contact i {
+            margin-right: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        /* Tables */
+        .table {
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .table th {
+            background-color: var(--light-bg);
+            font-weight: 600;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        /* Utilities */
+        .shadow-sm {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .rounded-xl {
+            border-radius: 1rem !important;
+        }
+
+        /* Custom container width */
+        .container-fluid {
+            padding-left: 2rem;
+            padding-right: 2rem;
+            max-width: 1920px; /* or any width you prefer */
+            margin: 0 auto;
+        }
+
+        /* Navbar container */
+        .navbar .container-fluid {
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        /* Main content container */
+        .main-container {
+            padding: 1rem 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+    </style>
 
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
                 <i class="fas fa-book me-2"></i>O'zbek Grammatikasi
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -27,27 +259,31 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">
-                            Bosh sahifa
-                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
+                           href="{% url 'home' %}">Bosh sahifa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'yordamchi_soz' %}active{% endif %}" 
+                           href="{% url 'yordamchi_soz' %}">Yordamchi so'z</a>
                     </li>
                     {% for category in categories %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'category_detail' category.pk %}">
+                        <a class="nav-link {% if category.pk|stringformat:'s' in request.path %}active{% endif %}" 
+                           href="{% if category.name == 'Yordamchi so\'z' %}{% url 'yordamchi_soz' %}{% else %}{% url 'category_detail' category.pk %}{% endif %}">
                             {{ category.name }}
                         </a>
                     </li>
                     {% endfor %}
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">
-                            Loyiha haqida
-                        </a>
+                        <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" 
+                           href="{% url 'about' %}">Loyiha haqida</a>
                     </li>
                 </ul>
-                <form class="d-flex" action="{% url 'search' %}" method="get">
-                    <input class="form-control me-2" type="search" name="q" placeholder="Qidirish..."
-                           value="{{ request.GET.q|default:'' }}">
-                    <button class="btn btn-light" type="submit">
+                <!-- Search Form -->
+                <form class="search-form d-flex" action="{% url 'search' %}" method="get">
+                    <input class="form-control search-input" type="search" name="q" 
+                           placeholder="Qidirish..." value="{{ request.GET.q|default:'' }}">
+                    <button class="search-button" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -56,43 +292,50 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="container py-4">
-        {% block content %}{% endblock %}
+    <main class="main-container">
+        <div class="container-fluid">
+            {% block content %}{% endblock %}
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4 mt-5">
+    <footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <h5>O'zbek Grammatikasi</h5>
-                    <p>O'zbek tilidagi leksik ma'no ifodalamaydigan grammatik shakllarning lingvistik bazasi.</p>
+                    <p class="text-gray-400 mb-4">O'zbek tilidagi leksik ma'no ifodalamaydigan grammatik shakllarning lingvistik bazasi.</p>
                 </div>
                 <div class="col-md-3">
                     <h5>Havolalar</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}" class="text-white">Bosh sahifa</a></li>
-                        <li><a href="{% url 'about' %}" class="text-white">Loyiha haqida</a></li>
+                        <li><a href="{% url 'home' %}" class="footer-link">Bosh sahifa</a></li>
+                        <li><a href="{% url 'about' %}" class="footer-link">Loyiha haqida</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
                     <h5>Aloqa</h5>
                     <ul class="list-unstyled">
-                        <li><i class="fas fa-envelope me-2"></i> info@uzbekgrammar.uz</li>
-                        <li><i class="fas fa-phone me-2"></i> +998 90 123 45 67</li>
+                        <li class="footer-contact">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@uzbekgrammar.uz</span>
+                        </li>
+                        <li class="footer-contact">
+                            <i class="fas fa-phone"></i>
+                            <span>+998 90 123 45 67</span>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="text-center mt-4">
-                <p class="mb-0">&copy; {% now "Y" %} O'zbek Grammatikasi. Barcha huquqlar himoyalangan.</p>
+            <hr class="mt-4 mb-4 border-gray-700">
+            <div class="text-center">
+                <p class="text-gray-400 mb-0">&copy; {% now "Y" %} O'zbek Grammatikasi. Barcha huquqlar himoyalangan.</p>
             </div>
         </div>
     </footer>
 
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="/static/js/main.js"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

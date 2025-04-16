@@ -1,67 +1,374 @@
 {% extends 'grammar_app/base.html' %}
+{% load static %}
 
 {% block title %}Loyiha haqida - O'zbek Grammatikasi{% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-header bg-primary text-white">
-        <h1 class="h2 mb-0">Loyiha haqida</h1>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-8">
-                <h2 class="h4">O'zbek tilidagi grammatik shakllar bazasi</h2>
-                <p>
-                    Ushbu loyiha o'zbek tilidagi leksik ma'no ifodalamaydigan grammatik shakllarning lingvistik bazasini o'z ichiga oladi. 
-                    Bazada qo'shimchalar, yordamchi so'zlar, modallar, undov so'zlar, ko'makchi va yordamchi fe'llar yig'ilgan.
-                </p>
-                
-                <h3 class="h5 mt-4">Bazadagi ma'lumotlar:</h3>
-                <ul>
-                    <li>Ko'makchi fe'llar</li>
-                    <li>Modal so'zlar</li>
-                    <li>Bog'lama va to'liqsiz fe'llar</li>
-                    <li>Affikslar (qo'shimchalar)</li>
-                </ul>
-                
-                <p>
-                    Har bir grammatik shakl uchun uning grammatik ma'nosi, ingliz tiliga tarjimasi, va misollar berilgan.
-                    Ma'lumotlar uslub va davr bo'yicha ham saralangan.
-                </p>
-                
-                <h3 class="h5 mt-4">Loyihaning maqsadi:</h3>
-                <p>
-                    Loyihaning asosiy maqsadi o'zbek tilini o'rganuvchilar, tilshunoslar va tarjimonlar uchun qo'llanma bo'lib xizmat qilish.
-                    Bu ma'lumotlar bazasi o'zbek tilini grammatik jihatdan chuqurroq o'rganishni istagan har qanday kishiga foydali bo'lishi mumkin.
-                </p>
+<div class="about-page py-5">
+    <!-- Hero Section -->
+    <div class="hero-section text-center mb-5">
+        <h1 class="display-4 mb-4">O'zbek Grammatikasi</h1>
+        <p class="hero-lead mb-4">O'zbek tilidagi leksik ma'no ifodalamaydigan grammatik shakllarning zamonaviy lingvistik bazasi</p>
+        <div class="stats-row row justify-content-center">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3>1000+</h3>
+                    <p>Grammatik shakllar</p>
+                </div>
             </div>
-            <div class="col-md-4">
-                <div class="card bg-light">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-language"></i>
+                    <h3>7</h3>
+                    <p>Grammatik kategoriyalar</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-sync"></i>
+                    <h3>Muntazam</h3>
+                    <p>Yangilanishlar</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row g-4">
+        <!-- Left Column -->
+        <div class="col-lg-8">
+            <!-- About Section -->
+            <div class="content-section mb-4">
+                <h2 class="section-title">Loyiha haqida</h2>
+                <div class="card">
                     <div class="card-body">
-                        <h4 class="h5">Kategoriyalar</h4>
-                        <ul class="list-group list-group-flush">
-                            {% for category in categories %}
-                            <li class="list-group-item bg-light">
-                                <a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a>
-                                <span class="badge bg-primary float-end">{{ category.forms.count }}</span>
-                            </li>
-                            {% endfor %}
+                        <p>O'zbek Grammatikasi loyihasi - bu o'zbek tilining grammatik tizimini o'rganish va tahlil qilish uchun yaratilgan zamonaviy platforma. Loyiha quyidagi maqsadlarni ko'zlaydi:</p>
+                        <ul class="feature-list">
+                            <li>O'zbek tilining grammatik shakllarini tizimli ravishda saqlash va taqdim etish</li>
+                            <li>Grammatik ma'lumotlarni uslubiy jihatdan tasniflash</li>
+                            <li>Tilshunoslar va tadqiqotchilar uchun ma'lumotlar bazasini yaratish</li>
+                            <li>O'zbek tili grammatikasini o'rganuvchilar uchun qo'llanma bo'lib xizmat qilish</li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="card mt-4">
+            </div>
+
+            <!-- Features Section -->
+            <div class="content-section mb-4">
+                <h2 class="section-title">Asosiy xususiyatlar</h2>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="icon-wrapper bg-primary">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3>Keng qamrovli baza</h3>
+                            <p>Grammatik shakllarning batafsil ma'lumotlari, misollar va tarjimalar</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="icon-wrapper bg-success">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h3>Qidiruv tizimi</h3>
+                            <p>Grammatik shakl va ma'nolar bo'yicha qidiruv imkoniyati</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="icon-wrapper bg-info">
+                                <i class="fas fa-file-export"></i>
+                            </div>
+                            <h3>Ma'lumotlarni eksport qilish</h3>
+                            <p>Excel va JSON formatlarida ma'lumotlarni yuklab olish</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="icon-wrapper bg-warning">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h3>Statistik tahlil</h3>
+                            <p>Grammatik shakllarning qo'llanilishi bo'yicha statistika</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Section -->
+            <div class="content-section mb-4">
+                <h2 class="section-title">Grammatik kategoriyalar</h2>
+                <div class="card">
                     <div class="card-body">
-                        <h4 class="h5">Aloqa</h4>
-                        <p>Loyiha haqida savol yoki takliflaringiz bo'lsa, biz bilan bog'laning:</p>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-envelope me-2"></i> info@uzbekgrammar.uz</li>
-                            <li><i class="fas fa-phone me-2"></i> +998 90 123 45 67</li>
-                        </ul>
+                        <div class="category-grid">
+                            <div class="category-item">
+                                <h4>Yordamchi so'zlar</h4>
+                                <p>Ko'makchilar, bog'lovchilar va yuklamalar</p>
+                            </div>
+                            <div class="category-item">
+                                <h4>Modal so'zlar</h4>
+                                <p>Modal ma'no ifodalovchi so'zlar</p>
+                            </div>
+                            <div class="category-item">
+                                <h4>Undov so'zlar</h4>
+                                <p>His-hayajon va taqlid so'zlar</p>
+                            </div>
+                            <div class="category-item">
+                                <h4>Ko'makchi fe'llar</h4>
+                                <p>Fe'l bilan bog'liq grammatik shakllar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-lg-4">
+            <!-- Contact Info -->
+            <div class="content-section mb-4">
+                <h2 class="section-title">Aloqa</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>info@uzbekgrammar.uz</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>Telefon</h4>
+                                    <p>+998 90 123 45 67</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-location-dot"></i>
+                                <div>
+                                    <h4>Manzil</h4>
+                                    <p>Toshkent, O'zbekiston</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="content-section mb-4">
+                <h2 class="section-title">Loyiha jamoasi</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="team-member">
+                            <img src="{% static 'img/team/default-avatar.png' %}" alt="Team member" class="team-avatar">
+                            <div class="team-info">
+                                <h4>PhD Qodirova Madina</h4>
+                                <p>Loyiha rahbari</p>
+                            </div>
+                        </div>
+                        <!-- Add more team members as needed -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+/* Modern Styling */
+.about-page {
+    background-color: #f8f9fa;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #4F46E5, #7C3AED);
+    padding: 4rem 2rem;
+    border-radius: 1rem;
+    margin-bottom: 3rem;
+}
+
+.hero-section h1 {
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-lead {
+    color: #ffffff;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    font-weight: 400;
+    max-width: 800px;
+    margin: 0 auto;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #2D3748;
+}
+
+.feature-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.icon-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.icon-wrapper i {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.feature-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.feature-list li {
+    padding: 0.5rem 0;
+    padding-left: 2rem;
+    position: relative;
+}
+
+.feature-list li:before {
+    content: "\f00c";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    color: #4F46E5;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.category-item {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.category-item:hover {
+    background: #e9ecef;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.contact-item i {
+    font-size: 1.5rem;
+    color: #4F46E5;
+    width: 40px;
+    height: 40px;
+    background: #EEF2FF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team-member {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.team-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 2rem 1rem;
+    }
+
+    .hero-lead {
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
+
+    .stats-row {
+        gap: 1rem;
+    }
+
+    .stat-card {
+        padding: 1.5rem;
+    }
+
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 {% endblock %}

@@ -3,20 +3,11 @@
 {% block title %}O'zbek Grammatikasi - Bosh sahifa{% endblock %}
 
 {% block content %}
-<div class="jumbotron bg-light p-5 rounded">
-    <h1 class="display-4">O‘zbek tilidagi grammatik shakllar bazasi</h1>
-    <p class="lead">
-        O‘zbek tilidagi leksik ma'no ifodalamaydigan grammatik shakllarning lingvistik bazasi.
-        Unda qo'shimchalar, yordamchi so'zlar, modallar, undov so'zlar, ko'makchi va yordamchi fe'llar to'plangan.
-    </p>
+<div class="jumbotron">
+    <h1 class="display-4">Lingvistik baza</h1>
+    <p class="lead">O'zbek tili grammatikasi bo'yicha ma'lumotlar bazasi</p>
     <hr class="my-4">
-    <p>Ingliz tiliga qachon qanday tarjima qilinishi, misollari berilgan. Uslub va davr bo'yicha saralangan.</p>
-    <div class="mt-4">
-        <form action="{% url 'search' %}" method="get" class="d-flex">
-            <input type="text" name="q" class="form-control form-control-lg me-2" placeholder="Qidirish...">
-            <button type="submit" class="btn btn-primary btn-lg">Qidirish</button>
-        </form>
-    </div>
+    <p>Grammatik ma'lumotlarni ko'rish uchun yuqoridagi bo'limlardan birini tanlang.</p>
 </div>
 
 <div class="mt-5">

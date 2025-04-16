@@ -1,0 +1,166 @@
+{% extends 'grammar_app/base.html' %}
+
+{% block title %}Yordamchi so'z - O'zbek Grammatikasi{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li class="breadcrumb-item active">Yordamchi so'z</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">Yordamchi so'z</h1>
+    
+    <!-- Statistics Card -->
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <h3 class="h5 mb-0">Yordamchi so'zlar statistikasi</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <canvas id="usageChart"></canvas>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-summary">
+                        <h4 class="h6 mb-3">Umumiy: 216 ta yordamchi so'z</h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <span class="badge bg-primary">192</span> Badiiy uslub
+                            </li>
+                            <li class="mb-2">
+                                <span class="badge bg-success">139</span> Ilmiy uslub
+                            </li>
+                            <li class="mb-2">
+                                <span class="badge bg-info">184</span> Publitsistik uslub
+                            </li>
+                            <li class="mb-2">
+                                <span class="badge bg-warning">119</span> Rasmiy uslub
+                            </li>
+                            <li class="mb-2">
+                                <span class="badge bg-danger">131</span> So'zlashuv uslubi
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for category in subcategories %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ category.title }}</h5>
+                    <p class="card-text">{{ category.description }}</p>
+                    <a href="{{ category.url }}" class="btn btn-primary w-100">
+                        <i class="fas fa-arrow-right me-2"></i> Kirish
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Add Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('usageChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Badiiy uslub', 'Ilmiy uslub', 'Publitsistik uslub', 'Rasmiy uslub', 'So\'zlashuv uslubi'],
+            datasets: [{
+                label: 'Yordamchi so\'zlar soni',
+                data: [192, 139, 184, 119, 131],
+                backgroundColor: [
+                    'rgba(13, 110, 253, 0.7)',  // Primary
+                    'rgba(25, 135, 84, 0.7)',   // Success
+                    'rgba(13, 202, 240, 0.7)',  // Info
+                    'rgba(255, 193, 7, 0.7)',   // Warning
+                    'rgba(220, 53, 69, 0.7)'    // Danger
+                ],
+                borderColor: [
+                    'rgb(13, 110, 253)',
+                    'rgb(25, 135, 84)',
+                    'rgb(13, 202, 240)',
+                    'rgb(255, 193, 7)',
+                    'rgb(220, 53, 69)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Yordamchi so\'zlarning uslubiy qo\'llanishi',
+                    font: {
+                        size: 16
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'So\'zlar soni'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Uslub turlari'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+
+<style>
+.card {
+    transition: transform 0.2s;
+    border: 1px solid rgba(0,0,0,0.125);
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.btn-primary {
+    background-color: #6610f2;
+    border-color: #6610f2;
+}
+.btn-primary:hover {
+    background-color: #520dc2;
+    border-color: #520dc2;
+}
+.stats-summary {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+}
+
+.stats-summary .badge {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+</style>
+{% endblock %} 

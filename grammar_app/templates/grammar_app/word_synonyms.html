@@ -1,0 +1,57 @@
+{% extends 'grammar_app/base.html' %}
+
+{% block title %}So'z sinonimlari - O'zbek Grammatikasi{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'yordamchi_soz' %}">Yordamchi so'z</a></li>
+            <li class="breadcrumb-item active">So'z sinonimlari</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
+            <h2 class="h5 mb-0">So'z sinonimlari</h2>
+            <div class="btn-group">
+                <a href="?format=excel" class="btn btn-sm btn-outline-success">
+                    <i class="fas fa-file-excel me-1"></i> Excel
+                </a>
+                <a href="?format=json" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-file-code me-1"></i> JSON
+                </a>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Grammatik so'z</th>
+                            <th>Tarjimalar</th>
+                            <th>Identifikator</th>
+                            <th>Sinonimlar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for word in words %}
+                        <tr>
+                            <td><strong>{{ word.grammatical_word }}</strong></td>
+                            <td>{{ word.translations }}</td>
+                            <td>{{ word.identity }}</td>
+                            <td>{{ word.synonyms }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">Ma'lumotlar mavjud emas</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends 'grammar_app/base.html' %}
+{% load static %}
+
+{% block title %}Grammatik ma'no bo'yicha saralangan{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'yordamchi_soz' %}">Yordamchi so'z</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Grammatik ma'no bo'yicha saralangan</li>
+        </ol>
+    </nav>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1 class="mb-4">Grammatik ma'no bo'yicha saralangan</h1>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <!-- Export buttons -->
+            <a href="?format=excel{% if search_query %}&q={{ search_query }}{% endif %}" class="btn btn-success">
+                <i class="bi bi-file-earmark-excel"></i> Excel formatida yuklash
+            </a>
+            <a href="?format=json{% if search_query %}&q={{ search_query }}{% endif %}" class="btn btn-primary">
+                <i class="bi bi-file-earmark-code"></i> JSON formatida yuklash
+            </a>
+        </div>
+    </div>
+
+    <!-- Search form -->
+    <div class="row mb-4">
+        <div class="col-md-6 mx-auto">
+            <form method="get" action="" class="d-flex">
+                <input type="text" name="q" class="form-control" placeholder="Qidirish..." value="{{ search_query }}">
+                <button type="submit" class="btn btn-primary ms-2">Qidirish</button>
+                {% if search_query %}
+                <a href="{% url 'grammatik_mano' %}" class="btn btn-outline-secondary ms-2">Tozalash</a>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <!-- Data table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>So'zning grammatik ma'nosi</th>
+                    <th>Badiiy uslub</th>
+                    <th>Ilmiy uslub</th>
+                    <th>Publitsistik uslub</th>
+                    <th>Rasmiy uslub</th>
+                    <th>So'zlashuv uslubi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if items %}
+                    {% for item in items %}
+                    <tr>
+                        <td><strong>{{ item.grammatik_manosi }}</strong></td>
+                        <td>{{ item.badiiy_uslub }}</td>
+                        <td>{{ item.ilmiy_uslub }}</td>
+                        <td>{{ item.publitsistik_uslub }}</td>
+                        <td>{{ item.rasmiy_uslub }}</td>
+                        <td>{{ item.sozlashuv_uslubi }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">Ma'lumot topilmadi</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <div>
+            Jami: {{ total_items }} ta
+            {% if total_items > 0 %}
+                • Ko'rsatilyapti: {{ page_obj.start_index }}-{{ page_obj.end_index }}
+            {% endif %}
+        </div>
+        
+        <nav aria-label="Sahifalar">
+            <ul class="pagination mb-0">
+                <!-- First page -->
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <!-- Previous -->
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                
+                <!-- Page numbers -->
+                {% for num in paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}">{{ num }}</a></li>
+                    {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                    {% endif %}
+                {% endfor %}
+                
+                <!-- Next -->
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <!-- Last page -->
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    /* Ensure the table headers stay fixed when scrolling horizontally */
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    /* Make first column sticky for easier reference */
+    .table th:first-child,
+    .table td:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        border-right: 2px solid #dee2e6;
+    }
+    
+    /* Ensure all header cells have dark background */
+    .table thead.table-dark th {
+        background-color: #212529 !important;
+        color: white !important;
+        font-weight: 500;
+    }
+    
+    /* First column header should match other headers */
+    .table th:first-child {
+        background-color: #212529;
+    }
+    
+    /* First column data cells keep white background */
+    .table td:first-child {
+        background-color: #fff;
+    }
+    
+    /* Add more visual separation between cells */
+    .table td, .table th {
+        padding: 0.75rem;
+        vertical-align: top;
+    }
+    
+    /* Highlight rows on hover */
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+    
+    /* Mobile responsive adjustments */
+    @media (max-width: 768px) {
+        .pagination {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %} 

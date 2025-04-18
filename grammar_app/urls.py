@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import UslubView, YordamchiSozView, HomeView, WordSynonymView, CodedWordView
+from .views import UslubView, YordamchiSozView, HomeView, WordSynonymView, GrammatikManoView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),  # Home page
@@ -15,5 +15,6 @@ urlpatterns = [
     path('yordamchi-soz/sinonimlar/', views.SinonimlarView.as_view(), name='sinonimlar'),
     path('yordamchi-soz/uslub/', UslubView.as_view(), name='uslub'),
     path('yordamchi-soz/word-synonyms/', WordSynonymView.as_view(), name='word_synonyms'),
-    path('yordamchi-soz/coded-words/', CodedWordView.as_view(), name='coded_words'),
+    path('yordamchi-soz/grammatik-mano/', GrammatikManoView.as_view(), name='grammatik_mano'),
+    path('yordamchi-soz/import-grammatik/', views.import_grammatik_excel, name='import_grammatik'),
 ]

@@ -92,25 +92,18 @@ class WordSynonym(models.Model):
         return self.grammatical_word
 
 
-class CodedWord(models.Model):
-    special_code = models.CharField(max_length=255, verbose_name="So'zning maxsus kodi", db_column="sozning_maxsus_kodi")
-    auxiliary_word = models.CharField(max_length=255, verbose_name="Yordamchi so'z", db_column="yordamchi_soz")
-    grammatical_code = models.CharField(max_length=255, verbose_name="Grammatik kodi", db_column="grammatik_kodi")
-    primary_meaning = models.TextField(verbose_name="So'zning birlamchi grammatik ma'nosi", db_column="sozning_birlamchi_grammatik_manosi")
-    secondary_meaning = models.TextField(verbose_name="Ikkilamchi grammatik ma'nosi", blank=True, null=True, db_column="ikkilamchi_grammatik_manosi")
-    third_meaning = models.TextField(verbose_name="Uchinchi grammatik ma'nosi", blank=True, null=True, db_column="uchinchi_grammatik_manosi")
-    fourth_meaning = models.TextField(verbose_name="To'rtinchi grammatik ma'nosi", blank=True, null=True, db_column="tortinchi_grammatik_manosi")
-    fifth_meaning = models.TextField(verbose_name="Beshinchi grammatik ma'nosi", blank=True, null=True, db_column="beshinchi_grammatik_manosi")
-    sixth_meaning = models.TextField(verbose_name="Oltinchi grammatik ma'nosi", blank=True, null=True, db_column="oltinchi_grammatik_manosi")
-    seventh_meaning = models.TextField(verbose_name="Yettinchi grammatik ma'nosi", blank=True, null=True, db_column="yettinchi_grammatik_manosi")
-    eighth_meaning = models.TextField(verbose_name="Sakkizinchi grammatik ma'nosi", blank=True, null=True, db_column="sakkizinchi_grammatik_manosi")
-    ninth_meaning = models.TextField(verbose_name="To'qqizinchi grammatik ma'nosi", blank=True, null=True, db_column="toqqizinchi_grammatik_manosi")
-    tenth_meaning = models.TextField(verbose_name="O'ninchi grammatik ma'nosi", blank=True, null=True, db_column="oninchi_grammatik_manosi")
+class GrammatikManoData(models.Model):
+    grammatik_manosi = models.TextField(verbose_name="So'zning grammatik ma'nosi")
+    badiiy_uslub = models.TextField(verbose_name="Badiiy uslub", blank=True)
+    ilmiy_uslub = models.TextField(verbose_name="Ilmiy uslub", blank=True)
+    publitsistik_uslub = models.TextField(verbose_name="Publitsistik uslub", blank=True)
+    rasmiy_uslub = models.TextField(verbose_name="Rasmiy uslub", blank=True)
+    sozlashuv_uslubi = models.TextField(verbose_name="So'zlashuv uslubi", blank=True)
 
     class Meta:
-        verbose_name = "Kodlangan so'z"
-        verbose_name_plural = "Kodlangan so'zlar"
-        ordering = ['special_code']
+        verbose_name = "Grammatik ma'no bo'yicha ma'lumot"
+        verbose_name_plural = "Grammatik ma'no bo'yicha ma'lumotlar"
+        ordering = ['grammatik_manosi']
 
     def __str__(self):
-        return f"{self.special_code} - {self.auxiliary_word}"
+        return self.grammatik_manosi

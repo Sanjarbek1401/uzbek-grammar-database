@@ -12,46 +12,89 @@
         </ol>
     </nav>
 
-    <div class="card shadow-sm">
-        <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
-            <h2 class="h5 mb-0">So'z sinonimlari</h2>
-            <div class="btn-group">
-                <a href="?format=excel" class="btn btn-sm btn-outline-success">
-                    <i class="fas fa-file-excel me-1"></i> Excel
-                </a>
-                <a href="?format=json" class="btn btn-sm btn-outline-primary">
-                    <i class="fas fa-file-code me-1"></i> JSON
-                </a>
-            </div>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1 class="mb-4">So'z sinonimlari</h1>
         </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped align-middle mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th>Grammatik so'z</th>
-                            <th>Tarjimalar</th>
-                            <th>Identifikator</th>
-                            <th>Sinonimlar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for word in words %}
-                        <tr>
-                            <td><strong>{{ word.grammatical_word }}</strong></td>
-                            <td>{{ word.translations }}</td>
-                            <td>{{ word.identity }}</td>
-                            <td>{{ word.synonyms }}</td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="4" class="text-center">Ma'lumotlar mavjud emas</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+        <div class="col-md-6 text-md-end">
+            <a href="?format=excel" class="btn btn-success">
+                <i class="bi bi-file-earmark-excel"></i> Excel formatida yuklash
+            </a>
+            <a href="?format=json" class="btn btn-primary ms-2">
+                <i class="bi bi-file-earmark-code"></i> JSON formatida yuklash
+            </a>
         </div>
     </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Grammatik so'z</th>
+                    <th>Tarjimalar</th>
+                    <th>Identifikator</th>
+                    <th>Sinonimlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for word in words %}
+                <tr>
+                    <td><strong>{{ word.grammatical_word }}</strong></td>
+                    <td>{{ word.translations }}</td>
+                    <td>{{ word.identity }}</td>
+                    <td>{{ word.synonyms }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">Ma'lumotlar mavjud emas</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<style>
+    /* Ensure the table headers stay fixed when scrolling horizontally */
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    /* Make first column sticky for easier reference */
+    .table th:first-child,
+    .table td:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        border-right: 2px solid #dee2e6;
+    }
+    
+    /* Ensure all header cells have dark background */
+    .table thead.table-dark th {
+        background-color: #212529 !important;
+        color: white !important;
+        font-weight: 500;
+    }
+    
+    /* First column header should match other headers */
+    .table th:first-child {
+        background-color: #212529;
+    }
+    
+    /* First column data cells keep white background */
+    .table td:first-child {
+        background-color: #fff;
+    }
+    
+    /* Add more visual separation between cells */
+    .table td, .table th {
+        padding: 0.75rem;
+        vertical-align: top;
+    }
+    
+    /* Highlight rows on hover */
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+</style>
 {% endblock %}

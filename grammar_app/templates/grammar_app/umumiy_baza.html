@@ -12,67 +12,66 @@
         </ol>
     </nav>
 
-    <div class="card shadow-sm">
-        <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
-            <div class="d-flex align-items-center">
-                <h2 class="h5 mb-0 me-3">Yordamchi so'zlar</h2>
-                <div class="btn-group">
-                    <a href="{% url 'export_category' category.id 'excel' %}" class="btn btn-sm btn-outline-success">
-                        <i class="fas fa-file-excel me-1"></i> Excel
-                    </a>
-                    <a href="{% url 'export_category' category.id 'json' %}" class="btn btn-sm btn-outline-primary">
-                        <i class="fas fa-file-code me-1"></i> JSON
-                    </a>
-                </div>
-            </div>
-            <span class="badge bg-primary">{{ forms.count }} ta</span>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1 class="mb-4">Yordamchi so'zlar</h1>
         </div>
-        <div class="card-body p-0">
-            <div class="p-3 border-bottom">
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-outline-primary active" data-filter="all">Hammasi</button>
-                    <button type="button" class="btn btn-outline-primary" data-filter="Ko'makchi">Ko'makchi</button>
-                    <button type="button" class="btn btn-outline-primary" data-filter="Bog'lovchi">Bog'lovchi</button>
-                    <button type="button" class="btn btn-outline-primary" data-filter="Yuklama">Yuklama</button>
-                </div>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover table-striped align-middle mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th>Yordamchi so'z</th>
-                            <th>Turkumi</th>
-                            <th>Grammatik ma'nosi</th>
-                            <th>Misollar</th>
-                            <th>In English</th>
-                            <th>Examples</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for form in forms %}
-                        <tr data-turkumi="{{ form.usage }}">
-                            <td><strong>{{ form.term }}</strong></td>
-                            <td>{{ form.get_usage_display }}</td>
-                            <td>{{ form.grammatical_meaning }}</td>
-                            <td>{{ form.examples.first.uzbek_text|default:"-" }}</td>
-                            <td>{{ form.translation }}</td>
-                            <td>{{ form.examples.first.english_translation|default:"-" }}</td>
-                            <td>
-                                <a href="{% url 'form_detail' form.pk %}" class="btn btn-sm btn-outline-primary rounded-pill">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="7" class="text-center">Ma'lumotlar mavjud emas</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <div class="col-md-6 text-md-end">
+            <div class="btn-group">
+                <a href="{% url 'export_category' category.id 'excel' %}" class="btn btn-success">
+                    <i class="bi bi-file-earmark-excel"></i> Excel formatida yuklash
+                </a>
+                <a href="{% url 'export_category' category.id 'json' %}" class="btn btn-primary ms-2">
+                    <i class="bi bi-file-earmark-code"></i> JSON formatida yuklash
+                </a>
             </div>
         </div>
+    </div>
+
+    <div class="mb-4">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-primary active" data-filter="all">Hammasi</button>
+            <button type="button" class="btn btn-outline-primary" data-filter="Ko'makchi">Ko'makchi</button>
+            <button type="button" class="btn btn-outline-primary" data-filter="Bog'lovchi">Bog'lovchi</button>
+            <button type="button" class="btn btn-outline-primary" data-filter="Yuklama">Yuklama</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Yordamchi so'z</th>
+                    <th>Turkumi</th>
+                    <th>Grammatik ma'nosi</th>
+                    <th>Misollar</th>
+                    <th>In English</th>
+                    <th>Examples</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in forms %}
+                <tr data-turkumi="{{ form.usage }}">
+                    <td><strong>{{ form.term }}</strong></td>
+                    <td>{{ form.get_usage_display }}</td>
+                    <td>{{ form.grammatical_meaning }}</td>
+                    <td>{{ form.examples.first.uzbek_text|default:"-" }}</td>
+                    <td>{{ form.translation }}</td>
+                    <td>{{ form.examples.first.english_translation|default:"-" }}</td>
+                    <td>
+                        <a href="{% url 'form_detail' form.pk %}" class="btn btn-sm btn-outline-primary rounded-pill">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">Ma'lumotlar mavjud emas</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -101,9 +100,60 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-.btn-group .btn.active {
-    background-color: #0d6efd;
-    color: white;
-}
+    /* Button group styling */
+    .btn-group .btn.active {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    /* Ensure the table headers stay fixed when scrolling horizontally */
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    /* Make first column sticky for easier reference */
+    .table th:first-child,
+    .table td:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        border-right: 2px solid #dee2e6;
+    }
+    
+    /* Ensure all header cells have dark background */
+    .table thead.table-dark th {
+        background-color: #212529 !important;
+        color: white !important;
+        font-weight: 500;
+    }
+    
+    /* First column header should match other headers */
+    .table th:first-child {
+        background-color: #212529;
+    }
+    
+    /* First column data cells keep white background */
+    .table td:first-child {
+        background-color: #fff;
+    }
+    
+    /* Add more visual separation between cells */
+    .table td, .table th {
+        padding: 0.75rem;
+        vertical-align: top;
+    }
+    
+    /* Highlight rows on hover */
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+    
+    /* Mobile responsive adjustments */
+    @media (max-width: 768px) {
+        .pagination {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
 </style>
 {% endblock %} 

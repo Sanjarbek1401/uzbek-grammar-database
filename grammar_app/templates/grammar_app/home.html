@@ -3,94 +3,466 @@
 {% block title %}O'zbek Grammatikasi - Bosh sahifa{% endblock %}
 
 {% block content %}
-<div class="jumbotron">
-    <h1 class="display-4">Lingvistik baza</h1>
-    <p class="lead">O'zbek tili grammatikasi bo'yicha ma'lumotlar bazasi</p>
-    <hr class="my-4">
-    <p>Grammatik ma'lumotlarni ko'rish uchun yuqoridagi bo'limlardan birini tanlang.</p>
+<!-- Hero Section -->
+<div class="hero-wrapper">
+    <div class="hero-content text-center">
+        <div class="hero-text">
+            <h1 class="hero-title">O‘zbek-ingliz yordamchi so‘zlar turkumi va grammatik shakllar lingvistik bazasi</h1>
+            <p class="hero-subtitle">Zamonaviy lingvistik ma'lumotlar bazasi</p>
+        </div>
+        <div class="search-wrapper">
+            <form action="{% url 'search' %}" method="get">
+                <div class="search-box">
+                    <input type="text" name="q" placeholder="Grammatik shakllarni qidiring..." class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
-<div class="mt-5">
-    <h2 class="mb-4">Grammatik kategoriyalar</h2>
+<!-- Categories Grid -->
+<div class="categories-wrapper">
+    <div class="section-header">
+        <h2>Grammatik kategoriyalar</h2>
+        <div class="header-line"></div>
+    </div>
     
-    <div class="row">
+    <div class="categories-grid">
         {% for category in categories %}
-        <div class="col-md-6 col-lg-3 mb-4">
-            <div class="card h-100 border-primary">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="card-title mb-0">{{ category.name }}</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">{{ category.description|default:"" }}</p>
-                    <p><strong>Jami shakllar:</strong> {{ category.forms.count }}</p>
-                </div>
-                <div class="card-footer bg-white border-0">
-                    <a href="{% url 'category_detail' category.pk %}" class="btn btn-outline-primary w-100">
-                        Batafsil ko'rish
-                    </a>
+        <div class="category-item">
+            <div class="category-card" data-count="{{ category.forms.count }}">
+                <div class="category-content">
+                    <div class="category-header">
+                        {% if category.name == "Yordamchi so'z" %}
+                            <i class="fas fa-link"></i>
+                        {% elif "Modal" in category.name %}
+                            <i class="fas fa-comment-dots"></i>
+                        {% elif category.name == "Ko'makchi fe'l" %}
+                            <i class="fas fa-running"></i>
+                        {% elif category.name == "Undov so'z" %}
+                            <i class="fas fa-exclamation"></i>
+                        {% else %}
+                            <i class="fas fa-book"></i>
+                        {% endif %}
+                        <h3>{{ category.name }}</h3>
+                    </div>
+                    <p class="category-desc">{{ category.description|default:"" }}</p>
+                    <div class="category-footer">
+                        <span class="count-badge">{{ category.forms.count }} ta shakl</span>
+                        <a href="{% url 'category_detail' category.pk %}" class="view-more">
+                            Batafsil <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
         {% empty %}
-        <div class="col-12">
-            <div class="alert alert-info">
-                Hozircha kategoriyalar mavjud emas.
-            </div>
+        <div class="empty-state">
+            <i class="fas fa-inbox fa-2x"></i>
+            <p>Hozircha kategoriyalar mavjud emas</p>
         </div>
         {% endfor %}
     </div>
 </div>
 
-<div class="mt-5">
-    <h2 class="mb-4">So'nggi qo'shilgan shakllar</h2>
-    
-    <div class="row">
+<!-- Recent Updates -->
+<div class="recent-updates">
+    <div class="section-header">
+        <h2>So'nggi qo'shilgan shakllar</h2>
+        <div class="header-line"></div>
+    </div>
+
+    <div class="updates-grid">
         {% for category, forms in category_examples.items %}
-        <div class="col-12 mb-4">
-            <div class="card">
-                <div class="card-header bg-light">
-                    <h3 class="card-title mb-0">{{ category.name }}</h3>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Grammatik shakl</th>
-                                    <th>Grammatik ma'nosi</th>
-                                    <th>Tarjimasi</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for form in forms %}
-                                <tr>
-                                    <td>{{ form.term }}</td>
-                                    <td>{{ form.grammatical_meaning|truncatechars:50 }}</td>
-                                    <td>{{ form.translation|truncatechars:50 }}</td>
-                                    <td>
-                                        <a href="{% url 'form_detail' form.pk %}" class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-eye me-1"></i> Ko'rish
-                                        </a>
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="4" class="text-center">Hozircha shakllar mavjud emas.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="card-footer bg-white">
-                    <a href="{% url 'category_detail' category.pk %}" class="btn btn-outline-primary">
-                        <i class="fas fa-list me-1"></i> Barcha shakllarni ko'rish
-                    </a>
-                </div>
+        {% if forms %}
+        <div class="update-section">
+            <div class="update-header">
+                <h3>{{ category.name }}</h3>
+                <a href="{% url 'category_detail' category.pk %}" class="view-all">
+                    Barchasini ko'rish <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Grammatik shakl</th>
+                            <th>Grammatik ma'nosi</th>
+                            <th>Tarjimasi</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for form in forms %}
+                        <tr>
+                            <td class="term-cell">{{ form.term }}</td>
+                            <td>{{ form.grammatical_meaning|truncatechars:50 }}</td>
+                            <td>{{ form.translation|truncatechars:50 }}</td>
+                            <td class="action-cell">
+                                <a href="{% url 'form_detail' form.pk %}" class="action-button">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
+
+<style>
+/* Hero Section */
+.hero-wrapper {
+    background: linear-gradient(120deg, #2563eb, #4f46e5);
+    padding: 5rem 2rem;
+    margin: -2rem -2rem 2rem -2rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.1));
+    pointer-events: none;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.search-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-box {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+    position: relative;
+}
+
+.search-box:focus-within {
+    border-color: #4f46e5;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    padding: 1rem 1.5rem;
+    padding-right: 3.5rem;
+    font-size: 1.1rem;
+    outline: none;
+    color: #000000 !important;
+    background-color: white !important;
+    font-family: inherit;
+    font-weight: 500;
+    width: 100%;
+}
+
+.search-input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+.search-button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #4f46e5;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.search-button:hover {
+    background: #4338ca;
+}
+
+/* Categories Section */
+.categories-wrapper {
+    padding: 4rem 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.header-line {
+    width: 60px;
+    height: 4px;
+    background: #4f46e5;
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.category-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    height: 100%;
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+    position: relative;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.category-header i {
+    font-size: 1.5rem;
+    color: #4f46e5;
+    margin-right: 1rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eff6ff;
+    border-radius: 10px;
+}
+
+.category-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.category-desc {
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.category-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.count-badge {
+    background: #eff6ff;
+    color: #4f46e5;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.view-more {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.3s;
+}
+
+.view-more:hover {
+    gap: 0.75rem;
+}
+
+/* Recent Updates Section */
+.recent-updates {
+    padding: 4rem 0;
+    background: #f9fafb;
+    margin: 0 -2rem;
+    padding: 4rem 2rem;
+}
+
+.updates-grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.update-section {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+.update-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.update-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.view-all {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.data-table {
+    overflow-x: auto;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    background: #f9fafb;
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    color: #4b5563;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.data-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    color: #1f2937;
+}
+
+.term-cell {
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.action-cell {
+    text-align: right;
+}
+
+.action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #eff6ff;
+    color: #4f46e5;
+    transition: all 0.3s ease;
+}
+
+.action-button:hover {
+    background: #4f46e5;
+    color: white;
+}
+
+/* Empty State */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    background: #f9fafb;
+    border-radius: 16px;
+    color: #6b7280;
+}
+
+.empty-state i {
+    margin-bottom: 1rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .update-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .data-table {
+        margin: 0 -1rem;
+    }
+}
+</style>
 {% endblock %}

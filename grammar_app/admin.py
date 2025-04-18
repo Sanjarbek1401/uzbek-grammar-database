@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import GrammaticalCategory, GrammaticalForm, Example, UslubData, WordSynonym, CodedWord
+from .models import GrammaticalCategory, GrammaticalForm, Example, UslubData, WordSynonym, GrammatikManoData
 
 class ExampleInline(admin.TabularInline):
     model = Example
@@ -118,11 +118,11 @@ class WordSynonymAdmin(admin.ModelAdmin):
     search_fields = ('grammatical_word', 'translations', 'identity', 'synonyms')
     list_per_page = 20
 
-@admin.register(CodedWord)
-class CodedWordAdmin(admin.ModelAdmin):
-    list_display = ('special_code', 'auxiliary_word', 'grammatical_code', 'primary_meaning')
-    search_fields = ('special_code', 'auxiliary_word', 'grammatical_code', 'primary_meaning')
-    list_filter = ('grammatical_code',)
+@admin.register(GrammatikManoData)
+class GrammatikManoDataAdmin(admin.ModelAdmin):
+    list_display = ('grammatik_manosi', 'badiiy_uslub', 'ilmiy_uslub', 
+                   'publitsistik_uslub', 'rasmiy_uslub', 'sozlashuv_uslubi')
+    search_fields = ('grammatik_manosi',)
     list_per_page = 20
 
 admin.site.register(Example)

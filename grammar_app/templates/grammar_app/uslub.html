@@ -4,7 +4,7 @@
 {% block title %}Uslub bo'yicha saralangan - Yordamchi so'zlar{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container-fluid py-4">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -14,22 +14,25 @@
         </ol>
     </nav>
 
-    <h2 class="mb-4">Yordamchi so'zlar uslubiy ma'lumotlari</h2>
-
-    <!-- Export buttons -->
-    <div class="d-flex justify-content-end mb-3">
-        <a href="?format=excel" class="btn btn-success me-2">
-            <i class="fas fa-file-excel"></i> Excel
-        </a>
-        <a href="?format=json" class="btn btn-primary">
-            <i class="fas fa-file-code"></i> JSON
-        </a>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h1 class="mb-4">Yordamchi so'zlar uslubiy ma'lumotlari</h1>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <!-- Export buttons -->
+            <a href="?format=excel" class="btn btn-success">
+                <i class="bi bi-file-earmark-excel"></i> Excel formatida yuklash
+            </a>
+            <a href="?format=json" class="btn btn-primary ms-2">
+                <i class="bi bi-file-earmark-code"></i> JSON formatida yuklash
+            </a>
+        </div>
     </div>
 
     <!-- Data table -->
     <div class="table-responsive">
-        <table class="table table-striped table-bordered">
-            <thead>
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th>Yordamchi so'z</th>
                     <th>Maxsus kodi</th>
@@ -45,14 +48,14 @@
                 {% if items %}
                     {% for item in items %}
                         <tr>
-                            <td>{{ item.yordamchi_soz }}</td>
+                            <td><strong>{{ item.yordamchi_soz }}</strong></td>
                             <td>{{ item.maxsus_kodi }}</td>
                             <td>{{ item.grammatik_manosi }}</td>
-                            <td>{% if item.badiiy %}✓{% else %}✗{% endif %}</td>
-                            <td>{% if item.ilmiy %}✓{% else %}✗{% endif %}</td>
-                            <td>{% if item.publitsistik %}✓{% else %}✗{% endif %}</td>
-                            <td>{% if item.rasmiy %}✓{% else %}✗{% endif %}</td>
-                            <td>{% if item.sozlashuv %}✓{% else %}✗{% endif %}</td>
+                            <td class="text-center">{% if item.badiiy %}✓{% else %}✗{% endif %}</td>
+                            <td class="text-center">{% if item.ilmiy %}✓{% else %}✗{% endif %}</td>
+                            <td class="text-center">{% if item.publitsistik %}✓{% else %}✗{% endif %}</td>
+                            <td class="text-center">{% if item.rasmiy %}✓{% else %}✗{% endif %}</td>
+                            <td class="text-center">{% if item.sozlashuv %}✓{% else %}✗{% endif %}</td>
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -64,4 +67,53 @@
         </table>
     </div>
 </div>
+
+<style>
+    /* Ensure the table headers stay fixed when scrolling horizontally */
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    /* Make first column sticky for easier reference */
+    .table th:first-child,
+    .table td:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        border-right: 2px solid #dee2e6;
+    }
+    
+    /* Ensure all header cells have dark background */
+    .table thead.table-dark th {
+        background-color: #212529 !important;
+        color: white !important;
+        font-weight: 500;
+    }
+    
+    /* First column header should match other headers */
+    .table th:first-child {
+        background-color: #212529;
+    }
+    
+    /* First column data cells keep white background */
+    .table td:first-child {
+        background-color: #fff;
+    }
+    
+    /* Add more visual separation between cells */
+    .table td, .table th {
+        padding: 0.75rem;
+        vertical-align: top;
+    }
+    
+    /* Highlight rows on hover */
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+    
+    /* Checkmarks and X marks styling */
+    .text-center {
+        font-size: 1.1rem;
+    }
+</style>
 {% endblock %}

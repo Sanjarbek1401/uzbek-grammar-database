@@ -262,10 +262,6 @@
                         <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
                            href="{% url 'home' %}">Bosh sahifa</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'yordamchi_soz' %}active{% endif %}" 
-                           href="{% url 'yordamchi_soz' %}">Yordamchi so'z</a>
-                    </li>
                     {% for category in categories %}
                     <li class="nav-item">
                         <a class="nav-link {% if category.pk|stringformat:'s' in request.path %}active{% endif %}" 

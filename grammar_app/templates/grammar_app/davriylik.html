@@ -1,7 +1,7 @@
 {% extends 'grammar_app/base.html' %}
 {% load static %}
 
-{% block title %}Sinonimlar - Yordamchi so'zlar{% endblock %}
+{% block title %}So'z davriyligiga ko'ra - Yordamchi so'zlar{% endblock %}
 
 {% block content %}
 <div class="container-fluid py-4">
@@ -10,13 +10,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
             <li class="breadcrumb-item"><a href="{% url 'yordamchi_soz' %}">Yordamchi so'z</a></li>
-            <li class="breadcrumb-item active">Sinonimlar</li>
+            <li class="breadcrumb-item active">So'z davriyligiga ko'ra</li>
         </ol>
     </nav>
 
     <div class="row mb-4">
         <div class="col-md-6">
-            <h1 class="mb-4">Sinonimlar</h1>
+            <h1 class="mb-4">So'z davriyligiga ko'ra</h1>
         </div>
         <div class="col-md-6 text-md-end">
             <!-- Export buttons -->
@@ -36,7 +36,7 @@
                 <input type="text" name="q" class="form-control" placeholder="Qidirish..." value="{{ search_query }}">
                 <button type="submit" class="btn btn-primary ms-2">Qidirish</button>
                 {% if search_query %}
-                <a href="{% url 'sinonimlar' %}" class="btn btn-outline-secondary ms-2">Tozalash</a>
+                <a href="{% url 'davriylik' %}" class="btn btn-outline-secondary ms-2">Tozalash</a>
                 {% endif %}
             </form>
         </div>
@@ -47,25 +47,27 @@
         <table class="table table-bordered table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th class="col-3">So'zning grammatik ma'nosi</th>
-                    <th class="col-4">Sinonimlar</th>
-                    <th class="col-3">Misol</th>
-                    <th class="col-2">In English</th>
+                    <th>XI-XII asrlar</th>
+                    <th>XIII-XIV asrlar</th>
+                    <th>XV-XVIII asrlar</th>
+                    <th>XIX asr</th>
+                    <th>XX asr</th>
                 </tr>
             </thead>
             <tbody>
-                {% if sinonimlar %}
-                    {% for item in sinonimlar %}
+                {% if items %}
+                    {% for item in items %}
                     <tr>
-                        <td><strong>{{ item.grammatik_manosi }}</strong></td>
-                        <td>{{ item.sinonimlar }}</td>
-                        <td>{{ item.misol }}</td>
-                        <td>{{ item.english }}</td>
+                        <td>{{ item.period_11_12 }}</td>
+                        <td>{{ item.period_13_14 }}</td>
+                        <td>{{ item.period_15_18 }}</td>
+                        <td>{{ item.period_19 }}</td>
+                        <td>{{ item.period_20 }}</td>
                     </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="4" class="text-center">Ma'lumot topilmadi</td>
+                        <td colspan="5" class="text-center">Ma'lumot topilmadi</td>
                     </tr>
                 {% endif %}
             </tbody>
@@ -181,4 +183,4 @@
         }
     }
 </style>
-{% endblock %}
+{% endblock %} 

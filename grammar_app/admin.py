@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import GrammaticalCategory, GrammaticalForm, Example, UslubData, WordSynonym, GrammatikManoData
+from .models import GrammaticalCategory, GrammaticalForm, Example, UslubData, WordSynonym, GrammatikManoData, DavriylikiData, Sinonimlar
 
 class ExampleInline(admin.TabularInline):
     model = Example
@@ -123,6 +123,19 @@ class GrammatikManoDataAdmin(admin.ModelAdmin):
     list_display = ('grammatik_manosi', 'badiiy_uslub', 'ilmiy_uslub', 
                    'publitsistik_uslub', 'rasmiy_uslub', 'sozlashuv_uslubi')
     search_fields = ('grammatik_manosi',)
+    list_per_page = 20
+
+@admin.register(DavriylikiData)
+class DavriylikiDataAdmin(admin.ModelAdmin):
+    list_display = ('period_11_12', 'period_13_14', 
+                    'period_15_18', 'period_19', 'period_20')
+    search_fields = ('period_11_12', 'period_13_14', 'period_15_18', 'period_19', 'period_20')
+    list_per_page = 20
+
+@admin.register(Sinonimlar)
+class SinonimlarAdmin(admin.ModelAdmin):
+    list_display = ('grammatik_manosi', 'sinonimlar', 'misol', 'english')
+    search_fields = ('grammatik_manosi', 'sinonimlar')
     list_per_page = 20
 
 admin.site.register(Example)

@@ -107,3 +107,33 @@ class GrammatikManoData(models.Model):
 
     def __str__(self):
         return self.grammatik_manosi
+
+
+class DavriylikiData(models.Model):
+    period_11_12 = models.CharField(max_length=255, verbose_name="XI-XII asr", blank=True)
+    period_13_14 = models.CharField(max_length=255, verbose_name="XIII-XIV asr", blank=True)
+    period_15_18 = models.CharField(max_length=255, verbose_name="XV-XVIII asr", blank=True)
+    period_19 = models.CharField(max_length=255, verbose_name="XIX asr", blank=True)
+    period_20 = models.CharField(max_length=255, verbose_name="XX asr", blank=True)
+    
+    class Meta:
+        verbose_name = "So'z davriyligi"
+        verbose_name_plural = "So'z davriyligiga ko'ra"
+    
+    def __str__(self):
+        return f"Davr: {self.period_11_12} - {self.period_20}"
+
+
+class Sinonimlar(models.Model):
+    grammatik_manosi = models.TextField(verbose_name="So'zning grammatik ma'nosi")
+    sinonimlar = models.TextField(verbose_name="Sinonimlar")
+    misol = models.TextField(verbose_name="Misol", blank=True)
+    english = models.TextField(verbose_name="In English", blank=True)
+    
+    class Meta:
+        verbose_name = "Sinonim"
+        verbose_name_plural = "Sinonimlar"
+        ordering = ['grammatik_manosi']
+    
+    def __str__(self):
+        return self.grammatik_manosi

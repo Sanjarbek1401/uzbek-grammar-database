@@ -13,7 +13,7 @@
 
     <div class="row mb-4">
         <div class="col-md-6">
-            <h1 class="mb-4">{% if "Modal" in category.name %}Modal so'zlar{% elif category.name == "Ko'makchi fe'l" %}Ko'makchi fe'llar{% elif category.name == "Affiksoid" %}Affiksoidlar{% else %}Grammatik shakllar{% endif %}</h1>
+            <h1 class="mb-4">{% if "Modal" in category.name %}Modal so'zlar{% elif category.name == "Ko'makchi fe'l" %}Ko'makchi fe'llar{% elif category.name == "Affiksoid" %}Affiksoidlar{% elif category.name == "So'z davriyligiga ko'ra" %}So'z davriyligiga ko'ra{% else %}Grammatik shakllar{% endif %}</h1>
         </div>
         <div class="col-md-6 text-md-end">
             <div class="d-flex justify-content-md-end align-items-center">
@@ -57,11 +57,11 @@
                         <th class="text-end" style="width: 5%"></th>
                     {% elif category.name == "Affiks" %}
                         <th style="width: 15%">Grammatik shakl</th>
-                        <th style="width: 20%">Grammatik vazifasi</th>
+                        <th style="width: 18%">Grammatik vazifasi</th>
                         <th style="width: 25%">Grammatik ma'nolari</th>
                         <th style="width: 15%">Misollar</th>
-                        <th style="width: 20%">Tarjimasi</th>
-                        <th style="width: 20%">Examples</th>
+                        <th style="width: 10%">Tarjimasi</th>
+                        <th style="width: 22%">Examples</th>
                         <th class="text-end" style="width: 5%"></th>
                     {% elif category.name == "Affiksoid" %}
                         <th style="width: 15%">Grammatik shakl</th>
@@ -70,6 +70,12 @@
                         <th style="width: 20%">Tarjimasi</th>
                         <th style="width: 15%">Examples in English</th>
                         <th class="text-end" style="width: 5%"></th>
+                    {% elif category.name == "So'z davriyligiga ko'ra" %}
+                        <th style="width: 20%">XI-XII asrlar</th>
+                        <th style="width: 20%">XIII-XIV asrlar</th>
+                        <th style="width: 20%">XV-XVIII asrlar</th>
+                        <th style="width: 20%">XIX asr</th>
+                        <th style="width: 20%">XX asr</th>
                     {% else %}
                         <th>Grammatik shakl</th>
                         <th>Grammatik ma'nosi</th>
@@ -94,10 +100,38 @@
                         </td>
                     {% elif category.name == "Ko'makchi fe'l" %}
                         <td><strong>{{ form.term }}</strong></td>
-                        <td>{{ form.grammatical_meaning }}</td>
-                        <td class="example-text">{{ form.examples.first.uzbek_text|default:"-" }}</td>
-                        <td>{{ form.translation }}</td>
-                        <td class="example-text">{{ form.examples.first.english_translation|default:"-" }}</td>
+                        <td>
+                            <ul class="meaning-list">
+                                {% for meaning in form.grammatical_meaning|split_lines %}
+                                    {% if meaning %}
+                                        <li>{{ meaning }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="example-list">
+                                {% for example in form.examples.all %}
+                                    <li>{{ example.uzbek_text }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="meaning-list">
+                                {% for trans in form.translation|split_lines %}
+                                    {% if trans %}
+                                        <li>{{ trans }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="example-list">
+                                {% for example in form.examples.all %}
+                                    <li>{{ example.english_translation }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
                         <td class="text-end">
                             <a href="{% url 'form_detail' form.pk %}" class="btn btn-sm btn-outline-primary rounded-pill">
                                 <i class="fas fa-eye"></i>
@@ -154,6 +188,12 @@
                                 <i class="fas fa-eye"></i>
                             </a>
                         </td>
+                    {% elif category.name == "So'z davriyligiga ko'ra" %}
+                        <td>{{ form.period_11_12 }}</td>
+                        <td>{{ form.period_13_14 }}</td>
+                        <td>{{ form.period_15_18 }}</td>
+                        <td>{{ form.period_19 }}</td>
+                        <td>{{ form.period_20 }}</td>
                     {% else %}
                         <td><strong>{{ form.term }}</strong></td>
                         <td>{{ form.grammatical_meaning }}</td>
@@ -175,6 +215,8 @@
                         <td colspan="7" class="text-center py-4">Bu kategoriyada hozircha shakllar mavjud emas.</td>
                     {% elif category.name == "Affiksoid" %}
                         <td colspan="6" class="text-center py-4">Bu kategoriyada hozircha shakllar mavjud emas.</td>
+                    {% elif category.name == "So'z davriyligiga ko'ra" %}
+                        <td colspan="5" class="text-center py-4">Bu kategoriyada hozircha shakllar mavjud emas.</td>
                     {% else %}
                         <td colspan="4" class="text-center py-4">Bu kategoriyada hozircha shakllar mavjud emas.</td>
                     {% endif %}

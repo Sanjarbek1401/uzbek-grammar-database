@@ -1,8 +1,45 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import DetailView
 from django.http import HttpResponse, JsonResponse
 import pandas as pd
-import json
-from ..models import GrammaticalCategory
+from ..models import GrammaticalCategory, GrammaticalForm, DavriylikiData
+
+
+class CategoryDetailView(DetailView):
+    model = GrammaticalCategory
+    template_name = 'grammar_app/category_detail.html'
+    context_object_name = 'category'
+
+    def get(self, request, *args, **kwargs):
+        category = self.get_object()
+        if category.name == "Yordamchi so'z":
+            return redirect('yordamchi_soz')
+        elif category.name == "So'z davriyligiga ko'ra":
+            # Create a dummy category for Davriylik data
+            davriylik_category = GrammaticalCategory(name="So'z davriyligiga ko'ra", description="So'zning davrlar bo'yicha tarixiy o'zgarishlari")
+            context = {
+                'category': davriylik_category,
+                'forms': DavriylikiData.objects.all(),
+                'categories': GrammaticalCategory.objects.all()  # For navigation
+            }
+            return render(request, self.template_name, context)
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['forms'] = self.object.forms.all()
+        return context
+
+
+class FormDetailView(DetailView):
+    model = GrammaticalForm
+    template_name = 'grammar_app/form_detail.html'
+    context_object_name = 'form'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['examples'] = self.object.examples.all()
+        return context
 
 
 def export_category(request, category_id, format):

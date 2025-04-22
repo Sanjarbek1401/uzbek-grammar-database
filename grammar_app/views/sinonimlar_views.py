@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 import pandas as pd
 import json
-from ..models import GrammaticalCategory, Sinonimlar
+from ..models import Sinonimlar, GrammaticalCategory
 
 
 class SinonimlarView(ListView):

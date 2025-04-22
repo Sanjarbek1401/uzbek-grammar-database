@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.views.generic import ListView
 from django.http import HttpResponse, JsonResponse
+from django.urls import reverse
 import pandas as pd
 import json
 from ..models import GrammatikManoData

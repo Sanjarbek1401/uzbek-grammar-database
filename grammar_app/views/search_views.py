@@ -1,7 +1,7 @@
 from django.db.models import Q
 from django.views.generic import ListView
 from django.urls import reverse
-from ..models import GrammaticalForm, UslubData, WordSynonym, Sinonimlar, GrammatikManoData
+from ..models import GrammaticalForm, UslubData, WordSynonym, GrammatikManoData, Sinonimlar
 
 
 class SearchResultsView(ListView):
